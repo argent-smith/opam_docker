@@ -20,7 +20,7 @@ RUN addgroup -S dev \
     && sed -i.bak 's/^Defaults.*requiretty//g' /etc/sudoers
 USER dev
 RUN opam init -a -y
-RUN opam switch 4.03.0+flambda
+RUN opam switch 4.06.1+flambda
 RUN opam install depext
 ENTRYPOINT [ "opam", "config", "exec", "--" ]
 CMD [ "bash" ]
