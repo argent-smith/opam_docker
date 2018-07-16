@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; -*-
-FROM arm64v8/alpine:3.7
+FROM arm64v8/alpine:3.8
 RUN apk add -U --no-cache \
         alpine-sdk \
         bash \
@@ -20,7 +20,9 @@ RUN addgroup -S dev \
     && sed -i.bak 's/^Defaults.*requiretty//g' /etc/sudoers
 USER dev
 RUN opam init -a -y
-RUN opam switch 4.06.1+flambda
+RUN opam update && opam upgrade
+RUN opam switch 4.07.0+flambda
 RUN opam install depext
+RUN rm -rf ~/.opam/archives/*
 ENTRYPOINT [ "opam", "config", "exec", "--" ]
 CMD [ "bash" ]
