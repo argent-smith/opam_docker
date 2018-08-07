@@ -46,7 +46,7 @@ RUN addgroup -S dev \
 USER dev
 
 WORKDIR /home/dev
-RUN opam init -a -y --disable-sandboxing --compiler=4.07.0 \
+RUN opam init -a -y --disable-sandboxing --compiler=4.07.0+flambda \
     && opam clean
 
 ENTRYPOINT [ "opam", "config", "exec", "--" ]
