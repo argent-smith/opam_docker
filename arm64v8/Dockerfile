@@ -1,4 +1,3 @@
-# opam building stage
 FROM arm64v8/alpine:3.8 as build-opam
 
 RUN apk add -U --no-cache \
@@ -21,7 +20,6 @@ RUN ./configure \
     && make \
     && make install
 
-# working image stage
 FROM arm64v8/alpine:3.8
 
 COPY --from=build-opam /usr/local/bin/opam /usr/local/bin/opam
