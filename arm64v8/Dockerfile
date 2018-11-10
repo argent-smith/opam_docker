@@ -12,9 +12,9 @@ RUN apk add -U --no-cache \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /work
-RUN git clone -b 2.0.0 --depth=1 https://github.com/ocaml/opam.git
+RUN git clone -b 2.0.1 --depth=1 https://github.com/ocaml/opam.git
 WORKDIR /work/opam
-RUN git checkout -b 2.0.0
+RUN git checkout -b 2.0.1
 RUN ./configure \
     && make lib-ext \
     && make \
@@ -44,7 +44,7 @@ RUN addgroup -S dev \
 USER dev
 
 WORKDIR /home/dev
-RUN opam init -a -y --disable-sandboxing --compiler=4.07.0+flambda \
+RUN opam init -a -y --disable-sandboxing --compiler=4.07.1 \
     && opam clean
 
 ENTRYPOINT [ "opam", "config", "exec", "--" ]
