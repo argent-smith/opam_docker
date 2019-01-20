@@ -12,9 +12,9 @@ RUN apk add -U --no-cache \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /work
-RUN git clone -b 2.0.1 --depth=1 https://github.com/ocaml/opam.git
+RUN git clone -b 2.0.2 --depth=1 https://github.com/ocaml/opam.git
 WORKDIR /work/opam
-RUN git checkout -b 2.0.1
+RUN git checkout -b 2.0.2
 RUN ./configure \
     && make lib-ext \
     && make \
@@ -29,6 +29,8 @@ RUN apk add -U --no-cache \
         bash \
         m4 \
         git \
+        xz \
+        rsync \
     && rm -rf /var/cache/apk/*
 
 RUN addgroup -S dev \
