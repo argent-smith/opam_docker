@@ -1,4 +1,4 @@
-FROM arm64v8/alpine:3.8 as build-opam
+FROM arm64v8/alpine:3.9 as build-opam
 
 RUN apk add -U --no-cache \
         alpine-sdk \
@@ -12,15 +12,15 @@ RUN apk add -U --no-cache \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /work
-RUN git clone -b 2.0.2 --depth=1 https://github.com/ocaml/opam.git
+RUN git clone -b 2.0.3 --depth=1 https://github.com/ocaml/opam.git
 WORKDIR /work/opam
-RUN git checkout -b 2.0.2
+RUN git checkout -b 2.0.3
 RUN ./configure \
     && make lib-ext \
     && make \
     && make install
 
-FROM arm64v8/alpine:3.8
+FROM arm64v8/alpine:3.9
 
 COPY --from=build-opam /usr/local/bin/opam /usr/local/bin/opam
 COPY --from=build-opam /usr/local/share/man/man1/opam* /usr/local/share/man/man1/
