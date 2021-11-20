@@ -14,13 +14,15 @@ jobs:
       - name: Prepare tag name from switch tag
         if: ${{ startsWith(github.ref, 'refs/tags/switch-') }}
         run: echo "TAG=${GITHUB_REF##*/}" | sed -e "s/switch-//" >> $GITHUB_ENV
-      - name: Set tag and image outputs
+      - name: Set tag, compiler and image outputs
         id: set_tag_name
         run: |
           test -n "${TAG}" || TAG=default
           IMAGE="argentoff/opam"
+          COMPILER=$(echo TAG | sed -e "s/-/+/")
           echo ::set-output name=tagged_image::${IMAGE}:${TAG}
           echo ::set-output name=tag::${TAG}
+          echo ::set-output name=compiler::${COMPILER}
       - name: Set up Docker buildX
         id: buildx
         uses: docker/setup-buildx-action@master
@@ -55,7 +57,7 @@ jobs:
           load: true
           # target: runtime
           build-args: |
-            COMPILER=${{ steps.set_tag_name.outputs.tag }}
+            COMPILER=${{ steps.set_tag_name.outputs.compiler }}
 
       - name: Move cache
         if: ${{ success() || (failure() && steps.build_frontend.outcome == 'failure') }}
