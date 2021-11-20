@@ -19,7 +19,7 @@ jobs:
         run: |
           test -n "${TAG}" || TAG=default
           IMAGE="argentoff/opam"
-          COMPILER=$(echo TAG | sed -e "s/-/+/")
+          COMPILER=$(echo ${TAG} | sed -e "s/-/+/")
           echo ::set-output name=tagged_image::${IMAGE}:${TAG}
           echo ::set-output name=tag::${TAG}
           echo ::set-output name=compiler::${COMPILER}
