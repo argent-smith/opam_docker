@@ -64,16 +64,5 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-      - name: Scan image
-        id: scan
-        uses: anchore/scan-action@v2
-        with:
-          image: ${{ steps.set_tag_name.outputs.tagged_image }}
-          grype-version: 0.15.0
-          severity-cutoff: critical
-          fail-build: false
-          acs-report-enable: true
-      - name: Push image (frontend)
-        run: docker push ${{ steps.set_tag_frontend.outputs.tagged_image }}
-      - name: Push image (backend)
-        run: docker push ${{ steps.set_tag_backend.outputs.tagged_image }}
+      - name: Push image
+        run: docker push ${{ steps.set_tag_name.outputs.tagged_image }}
